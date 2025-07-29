@@ -1,6 +1,6 @@
 
 import { Button } from '@/components/ui/button';
-import { Shield, Wallet, User, LogOut, Upload, FileSignature, ShieldCheck, Languages, Palette, FileText } from 'lucide-react';
+import { Shield, Wallet, User, LogOut, Upload, FileSignature, ShieldCheck, Languages, Palette, FileText, Home } from 'lucide-react';
 import { useWallet } from './WalletContext';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -10,7 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Link, useNavigate } from 'react-router-dom';
+import { DocumentUpload } from './DocumentUpload';
 
 export const Header = () => {
   const { isConnected, walletAddress, connectWallet, disconnectWallet } = useWallet();
@@ -32,9 +34,9 @@ export const Header = () => {
         <nav className="hidden md:flex items-center space-x-6 flex-1 ml-8">
           {isConnected ? (
             <>
-              <Link to="/dashboard/upload" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
-                <Upload className="h-4 w-4" />
-                <span>Upload</span>
+              <Link to="/dashboard" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
+                <Home className="h-4 w-4" />
+                <span>Dashboard</span>
               </Link>
               <Link to="/dashboard/verify" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
                 <ShieldCheck className="h-4 w-4" />
@@ -61,19 +63,32 @@ export const Header = () => {
         </nav>
 
         {isConnected ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center space-x-2">
-                <Avatar className="h-6 w-6">
-                  <AvatarFallback className="text-xs">
-                    {walletAddress?.slice(2, 4).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <span className="hidden sm:inline">
-                  {walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}
-                </span>
-              </Button>
-            </DropdownMenuTrigger>
+          <div className="flex items-center space-x-4">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="flex items-center space-x-2">
+                  <Upload className="h-4 w-4" />
+                  <span>Upload Document</span>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DocumentUpload />
+              </DialogContent>
+            </Dialog>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="flex items-center space-x-2">
+                  <Avatar className="h-6 w-6">
+                    <AvatarFallback className="text-xs">
+                      <User className="h-4 w-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="hidden sm:inline">
+                    {walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem onClick={() => navigate('/profile')}>
                 <User className="h-4 w-4 mr-2" />
@@ -97,7 +112,8 @@ export const Header = () => {
                 Disconnect Wallet
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+            </DropdownMenu>
+          </div>
         ) : (
           <Button 
             onClick={connectWallet}

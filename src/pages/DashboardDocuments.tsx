@@ -64,13 +64,13 @@ const DashboardDocuments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 grid grid-rows-[auto_1fr]">
       <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <SidebarProvider>
-            <div className="flex gap-6 w-full">
-              <Sidebar className="w-64 relative z-10">
+            <div className="grid grid-cols-[256px_1fr] gap-6 h-full">
+              <Sidebar className="relative">
                 <SidebarContent>
                   <SidebarGroup>
                     <SidebarGroupLabel className="flex items-center justify-between">

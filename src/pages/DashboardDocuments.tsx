@@ -70,7 +70,7 @@ const DashboardDocuments = () => {
         <div className="max-w-4xl mx-auto">
           <SidebarProvider>
             <div className="flex gap-6 w-full">
-              <Sidebar className="w-64">
+              <Sidebar className="w-64 relative z-10">
                 <SidebarContent>
                   <SidebarGroup>
                     <SidebarGroupLabel className="flex items-center justify-between">
@@ -101,6 +101,17 @@ const DashboardDocuments = () => {
                     <SidebarGroupLabel>Filters</SidebarGroupLabel>
                     <SidebarGroupContent>
                       <div className="space-y-4 px-3">
+                        <div>
+                          <label className="text-sm font-medium mb-2 block">Search</label>
+                          <div className="relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                            <Input 
+                              placeholder="Search documents..." 
+                              className="pl-10"
+                            />
+                          </div>
+                        </div>
+                        
                         <div>
                           <label className="text-sm font-medium mb-2 block">Status</label>
                           <Select>
@@ -141,20 +152,6 @@ const DashboardDocuments = () => {
                   <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">My Documents</h1>
                     <p className="text-gray-600">Manage your signed and pending documents</p>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                      <Input 
-                        placeholder="Search documents..." 
-                        className="pl-10 w-64"
-                      />
-                    </div>
-                    <Button variant="outline">
-                      <Filter className="h-4 w-4 mr-2" />
-                      Filter
-                    </Button>
                   </div>
                 </div>
                 

@@ -24,20 +24,19 @@ export const Header = () => {
   };
 
   return (
-    <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+    <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50 h-[72px]">
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between h-full">
+        <Link 
+          to={isConnected ? "/dashboard" : "/"} 
+          className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+        >
           <Shield className="h-8 w-8 text-blue-600" />
           <h1 className="text-2xl font-bold text-gray-900">SignChain</h1>
-        </div>
+        </Link>
         
         <nav className="hidden md:flex items-center space-x-6 flex-1 ml-8">
           {isConnected ? (
             <>
-              <Link to="/dashboard" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
-                <Home className="h-4 w-4" />
-                <span>Dashboard</span>
-              </Link>
               <Link to="/dashboard/verify" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
                 <ShieldCheck className="h-4 w-4" />
                 <span>Verify</span>

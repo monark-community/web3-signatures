@@ -1,46 +1,75 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
-import { DocumentUpload } from '@/components/DocumentUpload';
-import { SignatureFlow } from '@/components/SignatureFlow';
-import { VerificationTool } from '@/components/VerificationTool';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Upload, FileSignature, ShieldCheck, FileText } from 'lucide-react';
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState('upload');
+  const navigate = useNavigate();
+
+  const dashboardItems = [
+    {
+      title: "Upload Document",
+      description: "Upload and prepare documents for signing",
+      icon: Upload,
+      path: "/dashboard/upload",
+      color: "bg-blue-100 text-blue-600"
+    },
+    {
+      title: "Sign Documents", 
+      description: "Create blockchain signatures for your documents",
+      icon: FileSignature,
+      path: "/dashboard/signatures",
+      color: "bg-green-100 text-green-600"
+    },
+    {
+      title: "Verify Signatures",
+      description: "Verify the authenticity of signed documents", 
+      icon: ShieldCheck,
+      path: "/dashboard/verify",
+      color: "bg-purple-100 text-purple-600"
+    },
+    {
+      title: "My Documents",
+      description: "Access and manage your signed documents",
+      icon: FileText,
+      path: "/dashboard/documents", 
+      color: "bg-orange-100 text-orange-600"
+    }
+  ];
+
+  // Redirect to upload by default
+  useEffect(() => {
+    navigate('/dashboard/upload');
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Header />
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600 mb-8">Manage your documents and signatures</p>
+          <p className="text-gray-600 mb-8">Choose what you'd like to do</p>
           
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
-              <TabsTrigger value="upload" className="text-lg py-3">
-                Upload Document
-              </TabsTrigger>
-              <TabsTrigger value="sign" className="text-lg py-3">
-                Sign Documents
-              </TabsTrigger>
-              <TabsTrigger value="verify" className="text-lg py-3">
-                Verify Signature
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="upload" className="space-y-8">
-              <DocumentUpload />
-            </TabsContent>
-            
-            <TabsContent value="sign" className="space-y-8">
-              <SignatureFlow />
-            </TabsContent>
-            
-            <TabsContent value="verify">
-              <VerificationTool />
-            </TabsContent>
-          </Tabs>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {dashboardItems.map((item, index) => (
+              <Card 
+                key={index} 
+                className="cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => navigate(item.path)}
+              >
+                <CardHeader>
+                  <div className={`p-3 rounded-full w-fit ${item.color}`}>
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <CardTitle className="text-lg">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>{item.description}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 
 import { Button } from '@/components/ui/button';
-import { Shield, Wallet, User, LogOut, Upload, FileSignature, ShieldCheck } from 'lucide-react';
+import { Shield, Wallet, User, LogOut, Upload, FileSignature, ShieldCheck, Languages, Palette, FileText } from 'lucide-react';
 import { useWallet } from './WalletContext';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -29,20 +29,24 @@ export const Header = () => {
           <h1 className="text-2xl font-bold text-gray-900">SignChain</h1>
         </div>
         
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-6 flex-1 ml-8">
           {isConnected ? (
             <>
-              <Link to="/dashboard" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
+              <Link to="/dashboard/upload" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
                 <Upload className="h-4 w-4" />
                 <span>Upload</span>
               </Link>
-              <Link to="/dashboard" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
+              <Link to="/dashboard/signatures" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
                 <FileSignature className="h-4 w-4" />
                 <span>Signatures</span>
               </Link>
-              <Link to="/dashboard" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
+              <Link to="/dashboard/verify" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
                 <ShieldCheck className="h-4 w-4" />
                 <span>Verify</span>
+              </Link>
+              <Link to="/dashboard/documents" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
+                <FileText className="h-4 w-4" />
+                <span>My Documents</span>
               </Link>
             </>
           ) : (
@@ -78,6 +82,14 @@ export const Header = () => {
               <DropdownMenuItem onClick={() => navigate('/profile')}>
                 <User className="h-4 w-4 mr-2" />
                 Profile & Preferences
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Languages className="h-4 w-4 mr-2" />
+                Language (Coming Soon)
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Palette className="h-4 w-4 mr-2" />
+                Theme (Coming Soon)
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleDisconnect} className="text-red-600">

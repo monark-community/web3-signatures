@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Link, useNavigate } from 'react-router-dom';
 import { DocumentUpload } from './DocumentUpload';
 
@@ -72,6 +72,12 @@ export const Header = () => {
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center space-x-2">
+                    <Upload className="h-5 w-5" />
+                    <span>Upload Document</span>
+                  </DialogTitle>
+                </DialogHeader>
                 <DocumentUpload />
               </DialogContent>
             </Dialog>

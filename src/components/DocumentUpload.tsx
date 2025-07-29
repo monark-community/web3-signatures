@@ -1,11 +1,10 @@
 
 import { useState, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, FileText, Hash, Users, Plus, X } from 'lucide-react';
+import { Upload, FileText, Hash, Users, Plus, X, FileCheck } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export const DocumentUpload = () => {
@@ -14,6 +13,7 @@ export const DocumentUpload = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [signers, setSigners] = useState<string[]>(['']);
+  const [signatureFields, setSignatureFields] = useState<number>(0);
   const [isGeneratingHash, setIsGeneratingHash] = useState(false);
   const { toast } = useToast();
 
@@ -37,6 +37,9 @@ export const DocumentUpload = () => {
     setFile(selectedFile);
     setDocumentHash('');
     generateDocumentHash(selectedFile);
+    // Simulate detecting signature fields in PDF
+    const mockFields = Math.floor(Math.random() * 8) + 1; // 1-8 fields
+    setSignatureFields(mockFields);
   }, []);
 
   const generateDocumentHash = async (file: File) => {
@@ -76,24 +79,17 @@ export const DocumentUpload = () => {
   }, []);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center space-x-2">
-          <FileText className="h-5 w-5" />
-          <span>Upload Document</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="title">Document Title</Label>
-            <Input
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g., Employment Agreement, Grant Proposal"
-            />
-          </div>
+    <div className="space-y-6">
+      <div className="space-y-4">
+        <div>
+          <Label htmlFor="title">Document Title</Label>
+          <Input
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g., Employment Agreement, Grant Proposal"
+          />
+        </div>
           
           <div>
             <Label htmlFor="description">Description (Optional)</Label>
@@ -165,16 +161,29 @@ export const DocumentUpload = () => {
                 handleFileSelect(selectedFile);
               }
             }}
-            accept=".pdf,.doc,.docx,.txt"
+            accept=".pdf"
           />
           
           {file ? (
-            <div className="space-y-2">
-              <FileText className="h-12 w-12 text-green-600 mx-auto" />
-              <p className="text-lg font-medium text-gray-900">{file.name}</p>
-              <p className="text-sm text-gray-500">
-                {(file.size / 1024 / 1024).toFixed(2)} MB
-              </p>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <FileText className="h-12 w-12 text-green-600 mx-auto" />
+                <p className="text-lg font-medium text-gray-900">{file.name}</p>
+                <p className="text-sm text-gray-500">
+                  {(file.size / 1024 / 1024).toFixed(2)} MB
+                </p>
+              </div>
+              
+              {signatureFields > 0 && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <div className="flex items-center justify-center space-x-2 text-blue-700">
+                    <FileCheck className="h-5 w-5" />
+                    <span className="font-medium">
+                      {signatureFields} signature field{signatureFields !== 1 ? 's' : ''} detected
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-2">
@@ -186,7 +195,7 @@ export const DocumentUpload = () => {
                 or click to browse files
               </p>
               <p className="text-xs text-gray-400">
-                Supports PDF, DOC, DOCX, TXT
+                PDF files only
               </p>
             </div>
           )}
@@ -219,7 +228,6 @@ export const DocumentUpload = () => {
             Proceed to Signing
           </Button>
         )}
-      </CardContent>
-    </Card>
+      </div>
   );
 };

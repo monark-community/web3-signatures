@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, FileText, Hash } from 'lucide-react';
+import { Upload, FileText, Hash, Users, Plus, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export const DocumentUpload = () => {
@@ -13,8 +13,25 @@ export const DocumentUpload = () => {
   const [documentHash, setDocumentHash] = useState<string>('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [signers, setSigners] = useState<string[]>(['']);
   const [isGeneratingHash, setIsGeneratingHash] = useState(false);
   const { toast } = useToast();
+
+  const addSigner = () => {
+    setSigners([...signers, '']);
+  };
+
+  const removeSigner = (index: number) => {
+    if (signers.length > 1) {
+      setSigners(signers.filter((_, i) => i !== index));
+    }
+  };
+
+  const updateSigner = (index: number, value: string) => {
+    const newSigners = [...signers];
+    newSigners[index] = value;
+    setSigners(newSigners);
+  };
 
   const handleFileSelect = useCallback((selectedFile: File) => {
     setFile(selectedFile);
@@ -87,6 +104,48 @@ export const DocumentUpload = () => {
               placeholder="Brief description of the document"
               rows={3}
             />
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Label className="flex items-center space-x-2">
+              <Users className="h-4 w-4" />
+              <span>Required Signers</span>
+            </Label>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={addSigner}
+              className="flex items-center space-x-1"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Add Signer</span>
+            </Button>
+          </div>
+          
+          <div className="space-y-2">
+            {signers.map((signer, index) => (
+              <div key={index} className="flex items-center space-x-2">
+                <Input
+                  value={signer}
+                  onChange={(e) => updateSigner(index, e.target.value)}
+                  placeholder="Enter email address or wallet address"
+                  className="flex-1"
+                />
+                {signers.length > 1 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removeSigner(index)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            ))}
           </div>
         </div>
 

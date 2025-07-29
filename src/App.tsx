@@ -8,7 +8,7 @@ import { WalletProvider } from "./components/WalletContext";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import DashboardUpload from "./pages/DashboardUpload";
-import DashboardSignatures from "./pages/DashboardSignatures";
+
 import DashboardVerify from "./pages/DashboardVerify";
 import DashboardDocuments from "./pages/DashboardDocuments";
 import NotFound from "./pages/NotFound";
@@ -26,9 +26,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/upload" element={<DashboardUpload />} />
-              <Route path="/dashboard/signatures" element={<DashboardSignatures />} />
-              <Route path="/dashboard/verify" element={<DashboardVerify />} />
+          <Route path="/dashboard/upload" element={<DashboardUpload />} />
+          <Route path="/dashboard/verify" element={<DashboardVerify />} />
               <Route path="/dashboard/documents" element={<DashboardDocuments />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

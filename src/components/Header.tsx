@@ -36,10 +36,6 @@ export const Header = () => {
                 <Upload className="h-4 w-4" />
                 <span>Upload</span>
               </Link>
-              <Link to="/dashboard/signatures" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
-                <FileSignature className="h-4 w-4" />
-                <span>Signatures</span>
-              </Link>
               <Link to="/dashboard/verify" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
                 <ShieldCheck className="h-4 w-4" />
                 <span>Verify</span>
@@ -81,15 +77,19 @@ export const Header = () => {
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem onClick={() => navigate('/profile')}>
                 <User className="h-4 w-4 mr-2" />
-                Profile & Preferences
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/preferences')}>
+                <User className="h-4 w-4 mr-2" />
+                Preferences
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Languages className="h-4 w-4 mr-2" />
-                Language (Coming Soon)
+                Language
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Palette className="h-4 w-4 mr-2" />
-                Theme (Coming Soon)
+                Theme
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleDisconnect} className="text-red-600">

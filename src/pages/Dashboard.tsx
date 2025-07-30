@@ -1,8 +1,7 @@
-import { Header } from '@/components/Header';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Upload, FileSignature, ShieldCheck, FileText, Activity, Clock, CheckCircle, AlertCircle, Users, TrendingUp } from 'lucide-react';
+import { Upload, ShieldCheck, FileText, Activity, Clock, CheckCircle, AlertCircle, TrendingUp } from 'lucide-react';
+import { AppLayout } from '@/components/AppLayout';
 
 const Dashboard = () => {
   const quickActions = [
@@ -98,91 +97,84 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <Header />
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-            <p className="text-gray-600">Welcome back! Here's what's happening with your documents.</p>
-          </div>
-
-          {/* Stats Overview */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {stats.map((stat, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                      <p className="text-xs text-gray-500 mt-1">{stat.change}</p>
-                    </div>
-                    <stat.icon className={`h-8 w-8 ${stat.color}`} />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Quick Actions */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <TrendingUp className="h-5 w-5" />
-                  <span>Quick Actions</span>
-                </CardTitle>
-                <CardDescription>Get started with common tasks</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {quickActions.map((action, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-center space-x-4 p-4 rounded-lg border hover:bg-gray-50 cursor-pointer transition-colors"
-                    onClick={() => window.location.href = action.path}
-                  >
-                    <div className={`p-2 rounded-full ${action.color}`}>
-                      <action.icon className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{action.title}</h3>
-                      <p className="text-sm text-gray-600">{action.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Recent Activity */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Activity className="h-5 w-5" />
-                  <span>Recent Activity</span>
-                </CardTitle>
-                <CardDescription>Your latest document activities</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50">
-                    <activity.icon className={`h-5 w-5 ${getStatusColor(activity.status)}`} />
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-900">{activity.action}</p>
-                      <p className="text-sm text-gray-600">{activity.document}</p>
-                    </div>
-                    <span className="text-xs text-gray-500">{activity.time}</span>
-                  </div>
-                ))}
-                <Button variant="outline" className="w-full mt-4">
-                  View All Activity
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+    <AppLayout 
+      title="Dashboard" 
+      description="Welcome back! Here's what's happening with your documents."
+    >
+      {/* Stats Overview */}
+      <div className="grid md:grid-cols-3 gap-6 mb-8">
+        {stats.map((stat, index) => (
+          <Card key={index}>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">{stat.title}</p>
+                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="text-xs text-gray-500 mt-1">{stat.change}</p>
+                </div>
+                <stat.icon className={`h-8 w-8 ${stat.color}`} />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-    </div>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Quick Actions */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <TrendingUp className="h-5 w-5" />
+              <span>Quick Actions</span>
+            </CardTitle>
+            <CardDescription>Get started with common tasks</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {quickActions.map((action, index) => (
+              <div 
+                key={index}
+                className="flex items-center space-x-4 p-4 rounded-lg border hover:bg-gray-50 cursor-pointer transition-colors"
+                onClick={() => window.location.href = action.path}
+              >
+                <div className={`p-2 rounded-full ${action.color}`}>
+                  <action.icon className="h-5 w-5" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium text-gray-900">{action.title}</h3>
+                  <p className="text-sm text-gray-600">{action.description}</p>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Recent Activity */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Activity className="h-5 w-5" />
+              <span>Recent Activity</span>
+            </CardTitle>
+            <CardDescription>Your latest document activities</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {recentActivity.map((activity) => (
+              <div key={activity.id} className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50">
+                <activity.icon className={`h-5 w-5 ${getStatusColor(activity.status)}`} />
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900">{activity.action}</p>
+                  <p className="text-sm text-gray-600">{activity.document}</p>
+                </div>
+                <span className="text-xs text-gray-500">{activity.time}</span>
+              </div>
+            ))}
+            <Button variant="outline" className="w-full mt-4">
+              View All Activity
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </AppLayout>
   );
 };
 

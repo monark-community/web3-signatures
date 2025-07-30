@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react';
-import { Header } from '@/components/Header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider } from '@/components/ui/sidebar';
-import { FileText, Download, Eye, Calendar, Users, Search, Filter, Folder, Plus, FolderOpen, MoreVertical } from 'lucide-react';
+import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { FileText, Download, Eye, Calendar, Users, Search, Folder, Plus, FolderOpen, MoreVertical } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { AppLayout } from '@/components/AppLayout';
 
 const DashboardDocuments = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -216,186 +216,170 @@ const DashboardDocuments = () => {
     }
   };
 
-  return (
-    <div className="h-screen flex flex-col">
-      <Header />
-      <div className="flex flex-1 overflow-hidden">
-        <SidebarProvider>
-          <Sidebar className="w-64 border-r bg-gray-50">
-            <SidebarContent className="p-4">
-              <SidebarGroup>
-                <SidebarGroupLabel className="flex items-center justify-between mb-3">
-                  <span>Folders</span>
-                  <Button variant="ghost" size="sm">
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    {folders.map((folder) => (
-                      <SidebarMenuItem key={folder}>
-                        <SidebarMenuButton 
-                          className={`flex items-center space-x-2 w-full justify-start ${
-                            selectedFolder === folder ? 'bg-blue-50 text-blue-600' : ''
-                          }`}
-                          onClick={() => setSelectedFolder(folder)}
-                        >
-                          {folder === "All Documents" ? (
-                            <FolderOpen className="h-4 w-4" />
-                          ) : (
-                            <Folder className="h-4 w-4" />
-                          )}
-                          <span>{folder}</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
-              
-              <SidebarGroup>
-                <SidebarGroupLabel className="mb-3">Search & Filters</SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                        <Input 
-                          placeholder="Search documents..." 
-                          className="pl-10"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">Status</label>
-                      <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="All statuses" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                          <SelectItem value="all">All statuses</SelectItem>
-                          <SelectItem value="signed">Signed</SelectItem>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="verified">Verified</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">Date Range</label>
-                      <Select value={selectedDateRange} onValueChange={setSelectedDateRange}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="All time" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                          <SelectItem value="all">All time</SelectItem>
-                          <SelectItem value="today">Today</SelectItem>
-                          <SelectItem value="week">This week</SelectItem>
-                          <SelectItem value="month">This month</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </SidebarGroupContent>
-              </SidebarGroup>
-            </SidebarContent>
-          </Sidebar>
-          
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="p-6 border-b bg-white">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-2xl font-semibold text-gray-900">My Documents</h1>
-                  <p className="text-gray-600 mt-1">
-                    {filteredDocuments.length} of {documents.length} documents
-                  </p>
-                </div>
+  const sidebarContent = (
+    <>
+      <SidebarGroup>
+        <SidebarGroupLabel className="flex items-center justify-between mb-3">
+          <span>Folders</span>
+          <Button variant="ghost" size="sm">
+            <Plus className="h-4 w-4" />
+          </Button>
+        </SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {folders.map((folder) => (
+              <SidebarMenuItem key={folder}>
+                <SidebarMenuButton 
+                  className={`flex items-center space-x-2 w-full justify-start ${
+                    selectedFolder === folder ? 'bg-blue-50 text-blue-600' : ''
+                  }`}
+                  onClick={() => setSelectedFolder(folder)}
+                >
+                  {folder === "All Documents" ? (
+                    <FolderOpen className="h-4 w-4" />
+                  ) : (
+                    <Folder className="h-4 w-4" />
+                  )}
+                  <span>{folder}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+      
+      <SidebarGroup>
+        <SidebarGroupLabel className="mb-3">Search & Filters</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <div className="space-y-4">
+            <div>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input 
+                  placeholder="Search documents..." 
+                  className="pl-10"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
             </div>
             
-            <div className="flex-1 overflow-auto p-6 bg-gray-50">
-              {filteredDocuments.length === 0 ? (
-                <div className="text-center py-12">
-                  <FileText className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No documents found</h3>
-                  <p className="text-gray-500">Try adjusting your search or filters to find documents.</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {filteredDocuments.map((doc) => (
-                    <div 
-                      key={doc.id} 
-                      className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer group"
-                    >
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center space-x-2">
-                          <FileText className="h-8 w-8 text-blue-600 flex-shrink-0" />
-                          <div className="min-w-0 flex-1">
-                            <h3 className="font-medium text-gray-900 truncate text-sm">
-                              {doc.title}
-                            </h3>
-                          </div>
-                        </div>
-                        
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0"
-                            >
-                              <MoreVertical className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-white border border-gray-200 shadow-lg z-50">
-                            <DropdownMenuItem>
-                              <Eye className="h-4 w-4 mr-2" />
-                              View
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <Download className="h-4 w-4 mr-2" />
-                              Download
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                      
-                      <div className="space-y-2 mb-3">
-                        <div className="flex items-center justify-between">
-                          <Badge variant={getStatusColor(doc.status)} className="text-xs">
-                            {doc.status}
-                          </Badge>
-                          <span className="text-xs text-gray-500">{doc.size}</span>
-                        </div>
-                        
-                        <div className="flex items-center text-xs text-gray-500 space-x-3">
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="h-3 w-3" />
-                            <span>{doc.createdAt}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Users className="h-3 w-3" />
-                            <span>{doc.signers}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center text-xs text-gray-400">
-                          <Folder className="h-3 w-3 mr-1" />
-                          <span>{doc.folder}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+            <div>
+              <label className="text-sm font-medium mb-2 block">Status</label>
+              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="All statuses" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+                  <SelectItem value="all">All statuses</SelectItem>
+                  <SelectItem value="signed">Signed</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="verified">Verified</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <label className="text-sm font-medium mb-2 block">Date Range</label>
+              <Select value={selectedDateRange} onValueChange={setSelectedDateRange}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="All time" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+                  <SelectItem value="all">All time</SelectItem>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="week">This week</SelectItem>
+                  <SelectItem value="month">This month</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
-        </SidebarProvider>
-      </div>
-    </div>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </>
+  );
+
+  return (
+    <AppLayout 
+      title="My Documents" 
+      description={`${filteredDocuments.length} of ${documents.length} documents`}
+      sidebarContent={sidebarContent}
+    >
+      {filteredDocuments.length === 0 ? (
+        <div className="text-center py-12">
+          <FileText className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No documents found</h3>
+          <p className="text-gray-500">Try adjusting your search or filters to find documents.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredDocuments.map((doc) => (
+            <div 
+              key={doc.id} 
+              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer group"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <FileText className="h-8 w-8 text-blue-600 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-medium text-gray-900 truncate text-sm">
+                      {doc.title}
+                    </h3>
+                  </div>
+                </div>
+                
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0"
+                    >
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-white border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem>
+                      <Eye className="h-4 w-4 mr-2" />
+                      View
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Download className="h-4 w-4 mr-2" />
+                      Download
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              
+              <div className="space-y-2 mb-3">
+                <div className="flex items-center justify-between">
+                  <Badge variant={getStatusColor(doc.status)} className="text-xs">
+                    {doc.status}
+                  </Badge>
+                  <span className="text-xs text-gray-500">{doc.size}</span>
+                </div>
+                
+                <div className="flex items-center text-xs text-gray-500 space-x-3">
+                  <div className="flex items-center space-x-1">
+                    <Calendar className="h-3 w-3" />
+                    <span>{doc.createdAt}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Users className="h-3 w-3" />
+                    <span>{doc.signers}</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center text-xs text-gray-400">
+                  <Folder className="h-3 w-3 mr-1" />
+                  <span>{doc.folder}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </AppLayout>
   );
 };
 

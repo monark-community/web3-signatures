@@ -1,10 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { FileText, Download, Eye, Calendar, Users, Search, Folder, Plus, FolderOpen, MoreVertical } from 'lucide-react';
+import { FileText, Download, Eye, Calendar, Users, MoreVertical } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { AppLayout } from '@/components/AppLayout';
 import { AppSidebar } from '@/components/AppSidebar';
@@ -217,94 +214,22 @@ const DashboardDocuments = () => {
     }
   };
 
-  const sidebarContent = (
-    <>
-      <SidebarGroup>
-        <SidebarGroupLabel className="flex items-center justify-between mb-3">
-          <span>Folders</span>
-          <Button variant="ghost" size="sm">
-            <Plus className="h-4 w-4" />
-          </Button>
-        </SidebarGroupLabel>
-        <SidebarGroupContent>
-          <SidebarMenu>
-            {folders.map((folder) => (
-              <SidebarMenuItem key={folder}>
-                <SidebarMenuButton 
-                  className={`flex items-center space-x-2 w-full justify-start ${
-                    selectedFolder === folder ? 'bg-blue-50 text-blue-600' : ''
-                  }`}
-                  onClick={() => setSelectedFolder(folder)}
-                >
-                  {folder === "All Documents" ? (
-                    <FolderOpen className="h-4 w-4" />
-                  ) : (
-                    <Folder className="h-4 w-4" />
-                  )}
-                  <span>{folder}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
-      
-      <SidebarGroup>
-        <SidebarGroupLabel className="mb-3">Search & Filters</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <div className="space-y-4">
-            <div>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input 
-                  placeholder="Search documents..." 
-                  className="pl-10"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label className="text-sm font-medium mb-2 block">Status</label>
-              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="All statuses" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                  <SelectItem value="all">All statuses</SelectItem>
-                  <SelectItem value="signed">Signed</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="verified">Verified</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div>
-              <label className="text-sm font-medium mb-2 block">Date Range</label>
-              <Select value={selectedDateRange} onValueChange={setSelectedDateRange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="All time" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                  <SelectItem value="all">All time</SelectItem>
-                  <SelectItem value="today">Today</SelectItem>
-                  <SelectItem value="week">This week</SelectItem>
-                  <SelectItem value="month">This month</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </SidebarGroupContent>
-      </SidebarGroup>
-    </>
-  );
-
   return (
     <AppLayout 
       title="My Documents" 
       description={`${filteredDocuments.length} of ${documents.length} documents`}
-      sidebarContent={<AppSidebar />}
+      sidebarContent={
+        <AppSidebar 
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          selectedStatus={selectedStatus}
+          onStatusChange={setSelectedStatus}
+          selectedDateRange={selectedDateRange}
+          onDateRangeChange={setSelectedDateRange}
+          selectedFolder={selectedFolder}
+          onFolderChange={setSelectedFolder}
+        />
+      }
     >
       {filteredDocuments.length === 0 ? (
         <div className="text-center py-12">
@@ -372,7 +297,7 @@ const DashboardDocuments = () => {
                 </div>
                 
                 <div className="flex items-center text-xs text-gray-400">
-                  <Folder className="h-3 w-3 mr-1" />
+                  <FileText className="h-3 w-3 mr-1" />
                   <span>{doc.folder}</span>
                 </div>
               </div>

@@ -11,35 +11,47 @@ interface AppLayoutProps {
 
 export const AppLayout = ({ title, description, children, sidebarContent }: AppLayoutProps) => {
   return (
-    <div className="h-screen flex flex-col w-full">
-      <Header />
-      
-      <div className="flex flex-1 overflow-hidden w-full">
-        <SidebarProvider>
-          {sidebarContent && (
-            <Sidebar className="w-64 border-r bg-gray-50 flex-shrink-0">
-              <SidebarContent className="p-4 h-full overflow-auto">
-                {sidebarContent}
-              </SidebarContent>
+    <div className="h-screen flex w-full">
+      {sidebarContent ? (
+        <>
+          <SidebarProvider>
+            <Sidebar className="w-80 border-r bg-gray-50 flex-shrink-0 flex flex-col">
+              {sidebarContent}
             </Sidebar>
-          )}
-          
-          <div className="flex flex-col flex-1 overflow-hidden min-w-0">
-            <div className="p-6 border-b bg-white flex-shrink-0">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
-                  <p className="text-gray-600 mt-1">{description}</p>
+            
+            <div className="flex flex-col flex-1 overflow-hidden min-w-0">
+              <div className="p-6 border-b bg-white flex-shrink-0">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
+                    <p className="text-gray-600 mt-1">{description}</p>
+                  </div>
                 </div>
               </div>
+              
+              <div className="flex-1 overflow-auto p-6 bg-gray-50">
+                {children}
+              </div>
             </div>
-            
-            <div className="flex-1 overflow-auto p-6 bg-gray-50">
-              {children}
+          </SidebarProvider>
+        </>
+      ) : (
+        <div className="flex flex-col flex-1 overflow-hidden min-w-0">
+          <Header />
+          <div className="p-6 border-b bg-white flex-shrink-0">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
+                <p className="text-gray-600 mt-1">{description}</p>
+              </div>
             </div>
           </div>
-        </SidebarProvider>
-      </div>
+          
+          <div className="flex-1 overflow-auto p-6 bg-gray-50">
+            {children}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

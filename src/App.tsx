@@ -9,9 +9,8 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import DashboardUpload from "./pages/DashboardUpload";
-
-import DashboardVerify from "./pages/DashboardVerify";
 import DashboardDocuments from "./pages/DashboardDocuments";
+import SignDocument from "./pages/SignDocument";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,16 +39,12 @@ const App = () => (
                   <DashboardUpload />
                 </ProtectedRoute>
               } />
-              <Route path="/app/verify" element={
-                <ProtectedRoute>
-                  <DashboardVerify />
-                </ProtectedRoute>
-              } />
               <Route path="/app/documents" element={
                 <ProtectedRoute>
                   <DashboardDocuments />
                 </ProtectedRoute>
               } />
+              <Route path="/sign/doc/:docId" element={<SignDocument />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { DocumentUpload } from '@/components/DocumentUpload';
+import { VerificationTool } from '@/components/VerificationTool';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
@@ -87,12 +88,23 @@ export function AppSidebar({
               </DialogContent>
             </Dialog>
             
-            <Button variant="outline" className="w-full justify-start" asChild>
-              <Link to="/app/verify">
-                <ShieldCheck className="mr-2 h-4 w-4" />
-                Verify Signatures
-              </Link>
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="w-full justify-start">
+                  <ShieldCheck className="mr-2 h-4 w-4" />
+                  Verify Signatures
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center space-x-2">
+                    <ShieldCheck className="h-5 w-5" />
+                    <span>Verify Signatures</span>
+                  </DialogTitle>
+                </DialogHeader>
+                <VerificationTool />
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 

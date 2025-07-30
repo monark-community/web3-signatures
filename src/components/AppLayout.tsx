@@ -14,7 +14,7 @@ export const AppLayout = ({ title, description, children, sidebarContent }: AppL
     <div className="h-screen grid grid-rows-[72px_1fr] w-full">
       <Header />
       
-      <div className="overflow-hidden grid grid-cols-[auto_1fr] h-full">
+      <div className="overflow-hidden grid grid-cols-[auto_1fr] h-full w-full">
         <SidebarProvider>
           {sidebarContent && (
             <Sidebar className="w-64 border-r bg-gray-50 h-full max-h-full">
@@ -24,7 +24,7 @@ export const AppLayout = ({ title, description, children, sidebarContent }: AppL
             </Sidebar>
           )}
           
-          <div className="flex flex-col overflow-hidden h-full">
+          <div className="flex flex-col overflow-hidden h-full w-full min-w-0">
             <div className="p-6 border-b bg-white">
               <div className="flex items-center justify-between">
                 <div>
@@ -34,7 +34,7 @@ export const AppLayout = ({ title, description, children, sidebarContent }: AppL
               </div>
             </div>
             
-            <div className="flex-1 overflow-auto p-6 bg-gray-50">
+            <div className="flex-1 overflow-auto p-6 bg-gray-50 w-full">
               {children}
             </div>
           </div>

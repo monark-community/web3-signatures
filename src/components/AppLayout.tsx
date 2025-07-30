@@ -14,17 +14,17 @@ export const AppLayout = ({ title, description, children, sidebarContent }: AppL
     <div className="h-screen grid grid-rows-[72px_1fr] w-full">
       <Header />
       
-      <div className="overflow-hidden grid grid-cols-[auto_1fr]">
+      <div className="overflow-hidden grid grid-cols-[auto_1fr] h-full">
         <SidebarProvider>
           {sidebarContent && (
-            <Sidebar className="w-64 border-r bg-gray-50 h-full">
-              <SidebarContent className="p-4">
+            <Sidebar className="w-64 border-r bg-gray-50 h-full max-h-full">
+              <SidebarContent className="p-4 h-full overflow-auto">
                 {sidebarContent}
               </SidebarContent>
             </Sidebar>
           )}
           
-          <div className="flex flex-col overflow-hidden">
+          <div className="flex flex-col overflow-hidden h-full">
             <div className="p-6 border-b bg-white">
               <div className="flex items-center justify-between">
                 <div>

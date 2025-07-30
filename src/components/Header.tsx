@@ -25,7 +25,7 @@ export const Header = () => {
 
   return (
     <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50 h-[72px]">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between h-full">
+      <div className="px-6 py-4 flex items-center justify-between h-full w-full">
         <Link 
           to={isConnected ? "/dashboard" : "/"} 
           className="flex items-center space-x-2 hover:opacity-80 transition-opacity"

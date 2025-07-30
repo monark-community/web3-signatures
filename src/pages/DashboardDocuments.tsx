@@ -7,6 +7,7 @@ import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, Side
 import { FileText, Download, Eye, Calendar, Users, Search, Folder, Plus, FolderOpen, MoreVertical } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { AppLayout } from '@/components/AppLayout';
+import { AppSidebar } from '@/components/AppSidebar';
 
 const DashboardDocuments = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -303,7 +304,7 @@ const DashboardDocuments = () => {
     <AppLayout 
       title="My Documents" 
       description={`${filteredDocuments.length} of ${documents.length} documents`}
-      sidebarContent={sidebarContent}
+      sidebarContent={<AppSidebar />}
     >
       {filteredDocuments.length === 0 ? (
         <div className="text-center py-12">

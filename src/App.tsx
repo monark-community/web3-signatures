@@ -32,7 +32,7 @@ const App = () => (
               } />
               <Route path="/app" element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <DashboardDocuments />
                 </ProtectedRoute>
               } />
               <Route path="/app/upload" element={

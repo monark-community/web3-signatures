@@ -36,12 +36,8 @@ export const Header = () => {
         
         <nav className="hidden md:flex items-center space-x-6 flex-1 ml-8">
           {isConnected ? (
-            <>
-              <Link to="/app/documents" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
-                <FileText className="h-4 w-4" />
-                <span>My Documents</span>
-              </Link>
-            </>
+            <div className="flex items-center space-x-4">
+            </div>
           ) : (
             <>
               <a href="#features" className="text-gray-600 hover:text-blue-600 transition-colors">
@@ -59,32 +55,6 @@ export const Header = () => {
 
         {isConnected ? (
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="flex items-center space-x-2">
-                    <Upload className="h-4 w-4" />
-                    <span>Request Signature</span>
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center space-x-2">
-                      <Upload className="h-5 w-5" />
-                      <span>Request Signature</span>
-                    </DialogTitle>
-                  </DialogHeader>
-                  <DocumentUpload />
-                </DialogContent>
-              </Dialog>
-              
-              <Button variant="outline" asChild>
-                <Link to="/app/verify" className="flex items-center space-x-2">
-                  <ShieldCheck className="h-4 w-4" />
-                  <span>Verify</span>
-                </Link>
-              </Button>
-            </div>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

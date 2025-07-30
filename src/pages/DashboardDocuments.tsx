@@ -217,7 +217,7 @@ const DashboardDocuments = () => {
   return (
     <AppLayout 
       title="My Documents" 
-      description={`${filteredDocuments.length} of ${documents.length} documents`}
+      description="Access and manage your signed documents"
       sidebarContent={
         <AppSidebar 
           searchQuery={searchQuery}
@@ -238,11 +238,11 @@ const DashboardDocuments = () => {
           <p className="text-gray-500">Try adjusting your search or filters to find documents.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 max-w-full">
           {filteredDocuments.map((doc) => (
-            <div 
+            <div
               key={doc.id} 
-              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer group"
+              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer group min-w-0"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center space-x-2">

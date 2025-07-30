@@ -11,15 +11,17 @@ interface AppLayoutProps {
 
 export const AppLayout = ({ title, description, children, sidebarContent }: AppLayoutProps) => {
   return (
-    <div className="h-screen flex w-full">
+    <div className="h-screen flex w-full overflow-hidden">
       {sidebarContent ? (
         <>
           <SidebarProvider>
-            <Sidebar className="w-80 border-r bg-gray-50 flex-shrink-0 flex flex-col">
+            {/* Fixed width sidebar */}
+            <div className="w-80 border-r bg-gray-50 flex-shrink-0 flex flex-col">
               {sidebarContent}
-            </Sidebar>
+            </div>
             
-            <div className="flex flex-col flex-1 overflow-hidden min-w-0">
+            {/* Content area takes remaining width */}
+            <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
               <div className="p-6 border-b bg-white flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div>

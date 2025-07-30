@@ -30,22 +30,22 @@ const App = () => (
                   <Index />
                 </ProtectedRoute>
               } />
-              <Route path="/dashboard" element={
+              <Route path="/app" element={
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
               } />
-              <Route path="/dashboard/upload" element={
+              <Route path="/app/upload" element={
                 <ProtectedRoute>
                   <DashboardUpload />
                 </ProtectedRoute>
               } />
-              <Route path="/dashboard/verify" element={
+              <Route path="/app/verify" element={
                 <ProtectedRoute>
                   <DashboardVerify />
                 </ProtectedRoute>
               } />
-              <Route path="/dashboard/documents" element={
+              <Route path="/app/documents" element={
                 <ProtectedRoute>
                   <DashboardDocuments />
                 </ProtectedRoute>

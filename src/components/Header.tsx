@@ -27,7 +27,7 @@ export const Header = () => {
     <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50 h-[72px]">
       <div className="px-6 py-4 flex items-center justify-between h-full w-full">
         <Link 
-          to={isConnected ? "/dashboard" : "/"} 
+          to={isConnected ? "/app" : "/"} 
           className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
         >
           <Shield className="h-8 w-8 text-blue-600" />
@@ -37,11 +37,7 @@ export const Header = () => {
         <nav className="hidden md:flex items-center space-x-6 flex-1 ml-8">
           {isConnected ? (
             <>
-              <Link to="/dashboard/verify" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
-                <ShieldCheck className="h-4 w-4" />
-                <span>Verify</span>
-              </Link>
-              <Link to="/dashboard/documents" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
+              <Link to="/app/documents" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center space-x-1">
                 <FileText className="h-4 w-4" />
                 <span>My Documents</span>
               </Link>
@@ -63,23 +59,32 @@ export const Header = () => {
 
         {isConnected ? (
           <div className="flex items-center space-x-4">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="flex items-center space-x-2">
-                  <Upload className="h-4 w-4" />
-                  <span>Upload Document</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="flex items-center space-x-2">
-                    <Upload className="h-5 w-5" />
-                    <span>Upload Document</span>
-                  </DialogTitle>
-                </DialogHeader>
-                <DocumentUpload />
-              </DialogContent>
-            </Dialog>
+            <div className="flex items-center space-x-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="flex items-center space-x-2">
+                    <Upload className="h-4 w-4" />
+                    <span>Request Signature</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center space-x-2">
+                      <Upload className="h-5 w-5" />
+                      <span>Request Signature</span>
+                    </DialogTitle>
+                  </DialogHeader>
+                  <DocumentUpload />
+                </DialogContent>
+              </Dialog>
+              
+              <Button variant="outline" asChild>
+                <Link to="/app/verify" className="flex items-center space-x-2">
+                  <ShieldCheck className="h-4 w-4" />
+                  <span>Verify</span>
+                </Link>
+              </Button>
+            </div>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

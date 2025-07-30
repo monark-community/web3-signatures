@@ -1,32 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Upload, ShieldCheck, FileText, Activity, Clock, CheckCircle, AlertCircle, TrendingUp } from 'lucide-react';
+import { Upload, FileText, Activity, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { AppLayout } from '@/components/AppLayout';
+import { AppSidebar } from '@/components/AppSidebar';
 
 const Dashboard = () => {
-  const quickActions = [
-    {
-      title: "Upload Document",
-      description: "Upload and prepare documents for signing",
-      icon: Upload,
-      path: "/dashboard/upload",
-      color: "bg-blue-100 text-blue-600"
-    },
-    {
-      title: "Verify Signatures",
-      description: "Verify the authenticity of signed documents", 
-      icon: ShieldCheck,
-      path: "/dashboard/verify",
-      color: "bg-purple-100 text-purple-600"
-    },
-    {
-      title: "My Documents",
-      description: "Access and manage your signed documents",
-      icon: FileText,
-      path: "/dashboard/documents", 
-      color: "bg-orange-100 text-orange-600"
-    }
-  ];
 
   const recentActivity = [
     {
@@ -100,6 +78,7 @@ const Dashboard = () => {
     <AppLayout 
       title="Dashboard" 
       description="Welcome back! Here's what's happening with your documents."
+      sidebarContent={<AppSidebar />}
     >
       {/* Stats Overview */}
       <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -119,36 +98,8 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Quick Actions */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="h-5 w-5" />
-              <span>Quick Actions</span>
-            </CardTitle>
-            <CardDescription>Get started with common tasks</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {quickActions.map((action, index) => (
-              <div 
-                key={index}
-                className="flex items-center space-x-4 p-4 rounded-lg border hover:bg-gray-50 cursor-pointer transition-colors"
-                onClick={() => window.location.href = action.path}
-              >
-                <div className={`p-2 rounded-full ${action.color}`}>
-                  <action.icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">{action.title}</h3>
-                  <p className="text-sm text-gray-600">{action.description}</p>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        {/* Recent Activity */}
+      {/* Recent Activity */}
+      <div className="max-w-2xl">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">

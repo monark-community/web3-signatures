@@ -12,7 +12,7 @@ const Index = () => {
 
   useEffect(() => {
     if (isConnected) {
-      navigate('/dashboard');
+      navigate('/app');
     }
   }, [isConnected, navigate]);
 

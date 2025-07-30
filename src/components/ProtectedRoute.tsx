@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ children, requireAuth = true }: ProtectedRouteP
     if (requireAuth && !isConnected) {
       navigate('/');
     } else if (!requireAuth && isConnected) {
-      navigate('/dashboard');
+      navigate('/app');
     }
   }, [isConnected, requireAuth, navigate]);
 
